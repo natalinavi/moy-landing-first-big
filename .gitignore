@@ -1,0 +1,10 @@
+.DS_Store
+*.docx
+memory_from_gpt.txt
+landing.html
+*.jpeg
+!photo-ton.jpeg
+!photo-ton-1.png
+!photo-ton-2.jpeg
+1FD6971F-A4C3-44C6-BB09-66D5A153B15A_1_105_c.jpeg
+078A7B85-978B-4C85-A5B5-A02C82352440_1_201_a.jpeg
