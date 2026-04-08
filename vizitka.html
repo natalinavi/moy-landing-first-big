@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Наталья Чернышова — Резюме-визитка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-1:        #040A1A;
+    --bg-2:        #060F22;
+    --bg-3:        #0A162E;
+    --bg-4:        #0F1D38;
+    --gold-1:      #9A7A3A;
+    --gold-2:      #C4983C;
+    --gold-3:      #DDB84E;
+    --gold-4:      #EDD898;
+    --gold-glow:   rgba(221,184,78,.12);
+    --text:        #EDF1FA;
+    --text-dim:    #8899BB;
+    --text-muted:  #556070;
+    --card-bg:     rgba(255,255,255,.048);
+    --card-border: rgba(200,155,60,.20);
+    --divider:     rgba(255,255,255,.06);
+    --r:           16px;
+    --tr:          .26s cubic-bezier(.4,0,.2,1);
+    --font-h: 'Manrope', system-ui, sans-serif;
+    --font-b: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-b);
+    background: var(--bg-1);
+    color: var(--text);
+    line-height: 1.72;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--gold-2), var(--gold-4));
+    z-index: 1000; transition: width .08s linear;
+    pointer-events: none;
+  }
+
+  /* ── REVEAL ── */
+  .r {
+    opacity: 0; transform: translateY(12px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .r.in { opacity: 1; transform: none; }
+  .r.d1 { transition-delay: .10s; }
+  .r.d2 { transition-delay: .20s; }
+  .r.d3 { transition-delay: .30s; }
+  .r.d4 { transition-delay: .40s; }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 80px 0; }
+
+  /* ── LABEL ── */
+  .label {
+    font-family: var(--font-h);
+    font-size: .68rem; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold-2);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .label::before {
+    content: ''; display: block;
+    width: 24px; height: 1px;
+    background: var(--gold-2); flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--font-h);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700; line-height: 1.13;
+    margin-bottom: 16px; letter-spacing: -.02em;
+  }
+
+  .gold-accent {
+    background: linear-gradient(95deg, var(--gold-2), var(--gold-4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-rule {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, var(--gold-2), var(--gold-3));
+    border-radius: 2px; margin-bottom: 32px;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 60svh;
+    display: flex; align-items: center;
+    padding: 80px 0 64px;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  #hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 65% 50% at 8% 15%,  rgba(196,152,60,.09) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 45% at 88% 82%, rgba(59,82,140,.10)  0%, transparent 55%),
+      linear-gradient(165deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+  }
+  #hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle, rgba(200,155,60,.14) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    animation: drift 28s linear infinite;
+    opacity: .45;
+  }
+  @keyframes drift {
+    from { background-position: 0 0; }
+    to   { background-position: 44px 44px; }
+  }
+
+  .hero-in {
+    position: relative; z-index: 1;
+    width: 100%; padding: 0 28px;
+  }
+
+  .hero-label {
+    font-family: var(--font-h);
+    font-size: .68rem; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold-2);
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .hero-label::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--gold-2);
+  }
+
+  .hero-name {
+    font-family: var(--font-h);
+    font-size: clamp(2.6rem, 8vw, 4.4rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -.03em;
+    background: linear-gradient(135deg, var(--gold-3) 0%, var(--gold-4) 50%, var(--gold-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .hero-firstname {
+    font-family: var(--font-h);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+
+  .hero-contacts {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 8px 24px;
+    margin-bottom: 0;
+  }
+  .hero-contacts a {
+    font-family: var(--font-h);
+    font-size: .9rem; font-weight: 600;
+    color: var(--gold-3); text-decoration: none;
+    letter-spacing: .03em;
+    transition: color var(--tr);
+  }
+  .hero-contacts a:hover { color: var(--gold-4); }
+  .hero-contacts .dot { color: var(--text-muted); font-size: .7rem; align-self: center; }
+
+  /* ── GOAL ── */
+  #goal { background: var(--bg-1); padding: 60px 0; }
+
+  .goal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r);
+    border-left: 2px solid var(--gold-2);
+    padding: 28px 32px;
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-style: italic;
+    position: relative; overflow: hidden;
+  }
+  .goal-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, var(--gold-2), transparent);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%); }
+
+  .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .steps::before {
+    content: ''; position: absolute;
+    left: 25px; top: 28px; bottom: 28px; width: 1px;
+    background: linear-gradient(180deg, var(--gold-2), rgba(196,152,60,.06));
+  }
+
+  .step { display: flex; gap: 28px; align-items: flex-start; padding: 22px 0; }
+  .step-dot {
+    width: 52px; height: 52px; flex-shrink: 0;
+    background: var(--bg-2);
+    border: 1.5px solid var(--gold-2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-h); font-size: .72rem; font-weight: 800;
+    color: var(--gold-3); letter-spacing: .03em;
+    position: relative; z-index: 1;
+    box-shadow: 0 0 0 6px var(--bg-2);
+    line-height: 1.2; text-align: center;
+  }
+
+  .step-body { padding-top: 8px; flex: 1; }
+  .step-body h3 {
+    font-family: var(--font-h);
+    font-size: 1rem; font-weight: 700;
+    color: var(--text); margin-bottom: 8px; line-height: 1.3;
+  }
+  .step-body h3 span {
+    display: block;
+    font-size: .72rem; font-weight: 600;
+    color: var(--gold-2); letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .bullets li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: .88rem; color: var(--text-dim); line-height: 1.6;
+  }
+  .bullets li:last-child { border-bottom: none; }
+  .bullets .dash { color: var(--gold-2); font-weight: 700; flex-shrink: 0; }
+
+  /* ── AI BLOCK ── */
+  #ai-tools { background: var(--bg-2); }
+
+  .ai-intro {
+    font-size: .97rem; color: var(--text-dim);
+    line-height: 1.8; margin-bottom: 28px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r);
+    padding: 24px 22px;
+    transition: transform var(--tr), border-color var(--tr), box-shadow var(--tr);
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+    opacity: 0; transition: opacity var(--tr);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200,155,60,.4);
+    box-shadow: 0 14px 40px rgba(0,0,0,.25);
+  }
+  .card:hover::before { opacity: 1; }
+  .card h3 {
+    font-family: var(--font-h);
+    font-size: .95rem; font-weight: 700;
+    color: var(--text); margin-bottom: 8px; line-height: 1.3;
+  }
+  .card p { font-size: .84rem; color: var(--text-dim); line-height: 1.65; }
+
+  .card-icon {
+    font-size: 1.5rem; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: var(--font-h); font-weight: 800;
+    opacity: .7;
+  }
+
+  /* ── EDUCATION ── */
+  #education { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); }
+
+  .edu-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 32px; }
+  .edu-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: .92rem; color: var(--text-dim); line-height: 1.6;
+  }
+  .edu-item:first-child { border-top: 1px solid var(--divider); }
+  .edu-year {
+    font-family: var(--font-h); font-size: .72rem; font-weight: 700;
+    color: var(--gold-2); letter-spacing: .08em;
+    flex-shrink: 0; padding-top: 2px; min-width: 40px;
+  }
+  .edu-body strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  .certs-block {
+    font-size: .9rem; color: var(--text-dim);
+    padding: 22px 26px;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 2px solid var(--gold-1);
+    border-radius: 0 var(--r) var(--r) 0;
+    line-height: 1.75;
+  }
+  .certs-block strong { color: var(--gold-3); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg-1); }
+
+  .about-text { font-size: .97rem; color: var(--text-dim); line-height: 1.82; }
+  .about-text p + p { margin-top: 18px; }
+  .about-text strong { color: var(--text); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg-1);
+    border-top: 1px solid var(--divider);
+    padding: 40px 0;
+  }
+  .footer-in {
+    max-width: 760px; margin: 0 auto; padding: 0 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .footer-name {
+    font-family: var(--font-h); font-weight: 800; font-size: .95rem;
+    color: var(--text);
+  }
+  .footer-name em {
+    font-style: normal;
+    background: linear-gradient(95deg, var(--gold-2), var(--gold-4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .footer-contacts {
+    display: flex; align-items: center; flex-wrap: wrap;
+    justify-content: center; gap: 6px 20px;
+  }
+  .footer-contacts a {
+    font-size: .82rem; color: var(--text-muted);
+    text-decoration: none; transition: color var(--tr);
+    font-family: var(--font-h);
+  }
+  .footer-contacts a:hover { color: var(--gold-3); }
+
+  /* MAX icon */
+  .footer-messengers {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .max-link {
+    display: inline-flex; align-items: center; gap: 9px;
+    text-decoration: none;
+    font-family: var(--font-h); font-size: .8rem; font-weight: 600;
+    color: var(--text-dim); letter-spacing: .05em;
+    transition: color var(--tr), transform var(--tr);
+  }
+  .max-link:hover { color: var(--gold-4); transform: translateY(-2px); }
+  .max-link:hover .max-icon { filter: drop-shadow(0 0 8px rgba(100,120,255,.55)); }
+
+  .max-icon {
+    width: 38px; height: 38px;
+    transition: filter var(--tr);
+  }
+
+  .footer-copy { font-size: .78rem; color: var(--text-muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    section { padding: 60px 0; }
+    .wrap { padding: 0 18px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    .step { gap: 16px; }
+    .goal-card { padding: 22px 20px; }
+    #hero { min-height: 50svh; padding: 64px 0 48px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress"></div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-in">
+    <div class="hero-label r">Резюме-визитка</div>
+    <h1 class="hero-name r d1">Чернышова</h1>
+    <p class="hero-firstname r d2">Наталья</p>
+    <div class="hero-contacts r d3">
+      <a href="tel:+79812197273">+7 981 219 7273</a>
+      <span class="dot">◆</span>
+      <a href="mailto:fili.natali27@gmail.com">fili.natali27@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ЦЕЛЬ ═══ -->
+<section id="goal">
+  <div class="wrap">
+    <div class="label r">Цель</div>
+    <div class="goal-card r d1">
+      Содействовать развитию социальных проектов Санкт-Петербурга, опираясь на опыт в управлении, маркетинге и внедрении ИИ-технологий.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ОПЫТ ═══ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="label r">Опыт работы</div>
+    <h2 class="r d1"><span class="gold-accent">Управление.</span> Финансы. Маркетинг. ИИ.</h2>
+    <div class="gold-rule r d2"></div>
+
+    <div class="steps">
+
+      <div class="step r">
+        <div class="step-dot">2009<br/>2020</div>
+        <div class="step-body">
+          <h3>
+            <span>Операционный директор</span>
+            УК — Управление эксплуатацией недвижимости
+          </h3>
+          <ul class="bullets">
+            <li><span class="dash">—</span>Руководство группой из 10 юр. лиц и 120 сотрудников</li>
+            <li><span class="dash">—</span>Управление объектами недвижимости, оптимизация затрат</li>
+            <li><span class="dash">—</span>Участие в тендерах по 44-ФЗ / 223-ФЗ</li>
+            <li><span class="dash">—</span>Создание систем управленческого учёта и регулярной отчётности</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step r">
+        <div class="step-dot">2021<br/>2023</div>
+        <div class="step-body">
+          <h3>
+            <span>Менеджер проекта</span>
+            Медицинский туризм
+          </h3>
+          <ul class="bullets">
+            <li><span class="dash">—</span>Запуск направления с нуля: сайт, соцсети, лидогенерация</li>
+            <li><span class="dash">—</span>Цикл продаж, сопровождение клиентов</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step r">
+        <div class="step-dot">2022<br/>2023</div>
+        <div class="step-body">
+          <h3>
+            <span>Финансовый консультант</span>
+            Частная клиника
+          </h3>
+          <ul class="bullets">
+            <li><span class="dash">—</span>Внедрение бюджетной системы, снижение издержек на 17%</li>
+            <li><span class="dash">—</span>Привлечение 3,5 млн руб. из внутренних резервов</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step r">
+        <div class="step-dot">2024</div>
+        <div class="step-body">
+          <h3>
+            <span>Консультант по автоматизации и ИИ</span>
+            Внедрение GPT-решений
+          </h3>
+          <ul class="bullets">
+            <li><span class="dash">—</span>Внедрение чат-ботов на базе GPT</li>
+            <li><span class="dash">—</span>Сокращение времени ответа с 1 часа до 2 минут</li>
+            <li><span class="dash">—</span>Рост конверсии обращения в визит с 18% до 31%</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step r">
+        <div class="step-dot">2025</div>
+        <div class="step-body">
+          <h3>
+            <span>Консультант</span>
+            Бизнес-план глэмпинга
+          </h3>
+          <ul class="bullets">
+            <li><span class="dash">—</span>Финмодель, бюджет, пошаговый план запуска</li>
+            <li><span class="dash">—</span>Расчёт окупаемости, вывод на точку безубыточности</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AI-ИНСТРУМЕНТЫ ═══ -->
+<section id="ai-tools">
+  <div class="wrap">
+    <div class="label r">2026 — сейчас</div>
+    <h2 class="r d1">AI-инструменты <span class="gold-accent">для бизнеса</span></h2>
+    <div class="gold-rule r d2"></div>
+    <p class="ai-intro r d2">Создаю для бизнеса инструменты, освобождающие руководителя и команды от рутины с применением ИИ-технологий.</p>
+
+    <div class="cards-grid">
+      <div class="card r d1">
+        <div class="card-icon">01</div>
+        <h3>Секретарь</h3>
+        <p>Составляет протоколы совещаний автоматически — экономит время команды на фиксацию договорённостей.</p>
+      </div>
+      <div class="card r d2">
+        <div class="card-icon">02</div>
+        <h3>Маркетинговый отдел</h3>
+        <p>Стратегии продвижения, воронки продаж, лендинги, контент-планы и посты — всё в одном инструменте.</p>
+      </div>
+      <div class="card r d3">
+        <div class="card-icon">03</div>
+        <h3>Бизнес-ассистент</h3>
+        <p>Функционал разрабатывается под специфику заказчика. Возможности — неограничены.</p>
+      </div>
+      <div class="card r d4">
+        <div class="card-icon">04</div>
+        <h3>Мини-приложения</h3>
+        <p>Разработка цифровых решений и веб-приложений под конкретные бизнес-задачи с применением ИИ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ОБРАЗОВАНИЕ ═══ -->
+<section id="education">
+  <div class="wrap">
+    <div class="label r">Образование</div>
+    <h2 class="r d1">Академическая <span class="gold-accent">база</span></h2>
+    <div class="gold-rule r d2"></div>
+
+    <div class="edu-list r d2">
+      <div class="edu-item">
+        <div class="edu-year">2013</div>
+        <div class="edu-body">
+          <strong>ГУУ, Москва</strong>
+          Управление продажами, МВА &middot; Менеджмент организации
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2007</div>
+        <div class="edu-body">
+          <strong>МИПиП, Москва</strong>
+          Коммерческий &middot; Менеджмент организации
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">1996</div>
+        <div class="edu-body">
+          <strong>УГГУ, Екатеринбург</strong>
+          Факультет геологии и геофизики &middot; Геммология
+        </div>
+      </div>
+    </div>
+
+    <div class="certs-block r d3">
+      <strong>Дополнительно:</strong> сертификаты о прохождении курсов по применению ИИ, продвижению в Telegram, обучению персонала, коучингу.<br />
+      Создание цифровых решений, веб-приложений и автоматизаций для бизнес-задач и управления с применением ИИ-технологий.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ О СЕБЕ ═══ -->
+<section id="about">
+  <div class="wrap">
+    <div class="label r">О себе</div>
+    <div class="about-text r d1">
+      <p>Умею совмещать смысл и структуру, эмпатию и эффективность. Привыкла брать ответственность, действовать в условиях неопределённости. <strong>Сильна там, где важны не только цифры — но и судьбы людей.</strong></p>
+      <p>Личный путь и утрата сына, погибшего на СВО, сформировали во мне потребность делать работу, приносящую смысл и реальную пользу.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-in">
+    <div class="footer-name"><em>Наталья Чернышова</em></div>
+    <div class="footer-contacts">
+      <a href="tel:+79812197273">+7 981 219 7273</a>
+      <a href="mailto:fili.natali27@gmail.com">fili.natali27@gmail.com</a>
+    </div>
+
+    <!-- MAX мессенджер -->
+    <div class="footer-messengers">
+      <a class="max-link"
+         href="https://max.ru/u/f9LHodD0cOLe-2ViZ0Dj8seZRwFypyl2ZELu6H7B7wr0fjRRMxbQCNJX5I4"
+         target="_blank" rel="noopener" aria-label="Написать в MAX">
+        <!-- MAX icon SVG — синий градиент, белый пузырь чата -->
+        <svg class="max-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="max-grad" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"   stop-color="#5B6EF5"/>
+              <stop offset="50%"  stop-color="#7B4FE0"/>
+              <stop offset="100%" stop-color="#3BAAFF"/>
+            </linearGradient>
+          </defs>
+          <!-- background rounded square -->
+          <rect width="38" height="38" rx="10" fill="url(#max-grad)"/>
+          <!-- chat bubble shape -->
+          <path d="M19 9C13.477 9 9 13.03 9 18c0 2.56 1.1 4.87 2.88 6.53L11 29l4.77-2.08C15.84 26.97 16.9 27 17.97 27c.34 0 .68-.01 1.03-.04C19 26.98 19 26.99 19 27c5.523 0 10-4.03 10-9s-4.477-9-10-9z"
+                fill="white" fill-opacity="0.95"/>
+        </svg>
+        Написать в MAX
+      </a>
+    </div>
+
+    <div class="footer-copy">Наталья Чернышова &copy; 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  }, { passive: true });
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
