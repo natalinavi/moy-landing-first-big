@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test</title></head>
+<body style="background:#fff;font-family:sans-serif;padding:20px">
+<h2 id="status">Загрузка...</h2>
+<div id="log"></div>
+<script>
+function log(msg, color) {
+  document.getElementById('log').innerHTML += '<p style="color:'+(color||'black')+'">'+msg+'</p>';
+}
+document.getElementById('status').textContent = '✅ HTML работает';
+log('HTML загрузился');
+try {
+  // Тест CSS переменных
+  document.body.style.setProperty('--test', 'red');
+  log('CSS переменные: OK');
+} catch(e) { log('CSS ошибка: '+e, 'red'); }
+try {
+  var tg = window.Telegram && window.Telegram.WebApp;
+  log('Telegram SDK: ' + (tg ? 'найден, platform='+tg.platform : 'не найден'));
+} catch(e) { log('Telegram ошибка: '+e, 'red'); }
+log('JS работает нормально', 'green');
+</script>
+</body>
+</html>

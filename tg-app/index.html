@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <!--
+    Запрещаем масштабирование — приложение должно вести себя как нативное
+    maximum-scale=1 и user-scalable=no убирают зум по двойному тапу
+  -->
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>Держится ли ваш бизнес на системе или на вас?</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Telegram SDK — при открытии внутри Telegram инжектируется нативно.
+       В браузере window.Telegram будет undefined. -->
+
+
+</head>
+<body>
+
+<!-- Корневой контейнер приложения -->
+<div id="app">
+
+  <!-- ══════════════════════════════════
+       ЭКРАН 0: ПРИВЕТСТВИЕ
+  ══════════════════════════════════ -->
+  <div id="screen-welcome" class="screen">
+    <div class="screen-content">
+
+      <!-- Приветствие по имени (заполняется через JS, скрыто если имя неизвестно) -->
+      <p id="welcome-greeting" class="welcome-greeting" style="display:none;"></p>
+
+      <!-- Иллюстрация -->
+      <div class="welcome-icon">
+        <img src="assets/icon.png" alt="" aria-hidden="true">
+      </div>
+
+      <!-- Заголовок -->
+      <h1 class="welcome-title">
+        Держится ли ваш бизнес на системе<br>или <span class="title-underline">на вас</span>?
+      </h1>
+
+      <!-- Подзаголовок -->
+      <p class="welcome-subtitle">
+        6 вопросов → личный отчёт о рисках и точках роста
+      </p>
+
+      <!-- Социальное доказательство -->
+      <div class="social-proof" role="note">
+        <span class="social-proof-icon" aria-hidden="true">👤</span>
+        <span>
+          <span id="social-proof-count">122</span> <span id="social-proof-word">предпринимателя</span> уже прошли
+        </span>
+      </div>
+
+      <!-- Время прохождения -->
+      <p class="welcome-time">Займёт 2 минуты</p>
+
+      <!--
+        Фолбэк-кнопка для браузера (вне Telegram).
+        В Telegram используется нативная MainButton — эта скрыта.
+      -->
+      <button
+        id="btn-start-fallback"
+        class="fallback-btn"
+        style="display:none;"
+        aria-label="Начать диагностику">
+        Начать диагностику →
+      </button>
+
+      <!-- Кнопка «Поделиться» — отправляет ссылку на бота другу -->
+      <button id="btn-share" class="share-btn" aria-label="Поделиться с другом">
+        🔗 Поделиться с другом
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       ЭКРАНЫ 1–6: ВОПРОСЫ
+  ══════════════════════════════════ -->
+  <div id="screen-question" class="screen">
+
+    <!-- Шапка экрана вопроса: кнопка назад + прогресс-бар -->
+    <div class="progress-bar-header" role="progressbar" aria-label="Прогресс квиза">
+      <div class="progress-top-row">
+        <!-- Фолбэк-кнопка «Назад» для браузера (в Telegram используется нативная BackButton) -->
+        <button
+          id="btn-back-question"
+          class="back-btn"
+          style="display:none;"
+          aria-label="Назад">
+          ← Назад
+        </button>
+      </div>
+      <div class="progress-row">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <span id="progress-label" class="progress-label">Шаг 1 из 6</span>
+      </div>
+    </div>
+
+    <!-- Контент вопроса -->
+    <div class="screen-content">
+      <h2 id="question-text" class="question-text"></h2>
+      <!-- Кнопки ответов рендерятся динамически через JS -->
+      <div id="answers-list" class="answers-list" role="list"></div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       ЭКРАН 7: ЗАГРУЗКА РЕЗУЛЬТАТА
+  ══════════════════════════════════ -->
+  <div id="screen-loading" class="screen" aria-live="polite" aria-label="Анализ ответов">
+    <div class="screen-content">
+
+      <!-- Анимированный пульсирующий круг -->
+      <div class="loading-circle" aria-hidden="true"></div>
+
+      <h3 class="loading-title">Анализируем ваши ответы...</h3>
+
+      <!-- Шаги появляются последовательно через JS -->
+      <div class="loading-steps">
+        <p class="loading-step">✓&nbsp; Оцениваем зависимость</p>
+        <p class="loading-step">✓&nbsp; Определяем риски</p>
+        <p class="loading-step">⟳&nbsp; Формируем рекомендации</p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       ЭКРАН 8: РЕЗУЛЬТАТ
+  ══════════════════════════════════ -->
+  <div id="screen-result" class="screen">
+    <div class="screen-content">
+
+      <!-- «Ваш результат, Имя:» — имя берётся из tg.initDataUnsafe.user -->
+      <p id="result-greeting" class="result-greeting">Ваш результат:</p>
+
+      <!-- Индикатор: эмодзи + шкала + балл -->
+      <div class="result-indicator">
+        <span id="result-emoji" class="result-emoji" aria-hidden="true"></span>
+        <div class="result-scale-wrap">
+          <div class="result-scale" role="progressbar" aria-label="Уровень зависимости">
+            <div id="result-scale-fill" class="result-scale-fill"></div>
+          </div>
+          <span id="result-score" class="result-score"></span>
+        </div>
+      </div>
+
+      <!-- Название уровня (цвет задаётся через JS) -->
+      <h2 id="result-title" class="result-title"></h2>
+
+      <!-- Описание ситуации -->
+      <div id="result-desc" class="card result-desc"></div>
+
+      <!-- Три первых шага -->
+      <div class="result-steps-wrap">
+        <p class="result-steps-label">Три первых шага:</p>
+        <ul id="result-steps" class="result-steps"></ul>
+      </div>
+
+      <!-- Фолбэк-кнопка для браузера -->
+      <button
+        id="btn-result-fallback"
+        class="fallback-btn"
+        style="display:none;"
+        aria-label="Разобрать мою ситуацию">
+        Разобрать мою ситуацию →
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       ЭКРАН 9: CTA / ЗАПИСЬ
+  ══════════════════════════════════ -->
+  <div id="screen-cta" class="screen">
+    <div class="screen-content">
+
+      <!-- Фото эксперта -->
+      <div class="expert-photo-wrap">
+        <img
+          src="assets/photo.jpg"
+          alt="Наталья Чернышова"
+          class="expert-photo"
+          loading="eager">
+      </div>
+
+      <!-- Имя и должность -->
+      <p class="expert-name">Наталия Чернышова</p>
+      <p class="expert-role">Бизнес-стратег · Системный аудит · AI-интеграция</p>
+
+      <!-- Карточка оффера -->
+      <div class="card offer-card">
+        <p class="offer-question">Получите персональный разбор вашей ситуации</p>
+        <p class="offer-desc">
+          За 30 минут обсудим ваш результат и вы увидите, какие процессы
+          завязаны на вас сильнее всего и какой следующий шаг даст наибольший эффект.
+        </p>
+      </div>
+
+      <!-- Дефицит -->
+      <p class="scarcity">🔴 Осталось 2 места на этой неделе</p>
+
+      <!-- Условия -->
+      <p class="offer-conditions">Бесплатно · 30 минут</p>
+
+      <!-- Фолбэк-кнопка для браузера -->
+      <button
+        id="btn-cta-fallback"
+        class="fallback-btn"
+        style="display:none;"
+        aria-label="Забронировать встречу">
+        Забронировать встречу →
+      </button>
+
+      <!-- Кнопка сохранения результатов (отправляет в Telegram) -->
+      <button
+        id="btn-save-results"
+        class="save-results-btn"
+        aria-label="Сохранить результаты">
+        💾 Сохранить результаты
+      </button>
+
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+
+<!-- ══════════════════════════════════
+     МОДАЛКА-ОФФЕР
+     Показывается только в браузере (не внутри Telegram).
+     Один раз — запоминается в localStorage.
+══════════════════════════════════ -->
+<div id="offer-overlay" class="offer-overlay" aria-modal="true" role="dialog" aria-label="Предложение">
+  <div class="offer-card-modal">
+
+    <div class="offer-emoji">🧭</div>
+
+    <span class="offer-badge">Квиз за 2 минуты</span>
+
+    <h2 class="offer-title">Узнайте, насколько ваш бизнес завязан на вас</h2>
+
+    <p class="offer-subtitle">Подпишитесь на бота, чтобы сохранить результат и получить доступ к следующему шагу после квиза</p>
+
+    <ul class="offer-bullets">
+      <li>Сохраните результат квиза в Telegram</li>
+      <li>Сможете вернуться к нему позже</li>
+      <li>Перейдёте к записи на встречу в один клик</li>
+    </ul>
+
+    <a
+      id="offer-btn-subscribe"
+      href="https://t.me/AI_questionquiz_bot"
+      target="_blank"
+      class="offer-btn-primary"
+      rel="noopener">
+      Сохранить результат
+    </a>
+
+    <button id="offer-btn-skip" class="offer-btn-skip">Пройти без подписки</button>
+
+  </div>
+</div>
+
+
+<!-- Данные квиза -->
+<script src="questions.js"></script>
+<!-- Логика приложения -->
+<script src="app.js"></script>
+
+</body>
+</html>

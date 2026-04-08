@@ -1,0 +1,31 @@
+<!-- Иконка для экрана приветствия: весы как символ баланса бизнеса -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Фон-круг -->
+  <circle cx="40" cy="40" r="40" fill="#2AABEE" fill-opacity="0.12"/>
+
+  <!-- Стойка весов -->
+  <rect x="38.5" y="28" width="3" height="30" rx="1.5" fill="#2AABEE"/>
+  <!-- Основание -->
+  <rect x="26" y="56" width="28" height="4" rx="2" fill="#2AABEE"/>
+  <!-- Шарик наверху -->
+  <circle cx="40" cy="26" r="4" fill="#2AABEE"/>
+
+  <!-- Перекладина -->
+  <rect x="18" y="34" width="44" height="3" rx="1.5" fill="#2AABEE"/>
+
+  <!-- Чаша левая (с грузом) -->
+  <path d="M20 37 Q16 44 24 44 Q32 44 28 37 Z" fill="#2AABEE" fill-opacity="0.7"/>
+  <!-- Строки левой чаши -->
+  <line x1="20" y1="37" x2="22" y2="44" stroke="#2AABEE" stroke-width="1.5"/>
+  <line x1="28" y1="37" x2="26" y2="44" stroke="#2AABEE" stroke-width="1.5"/>
+
+  <!-- Чаша правая (поднята) -->
+  <path d="M52 42 Q48 49 56 49 Q64 49 60 42 Z" fill="#2AABEE" fill-opacity="0.4"/>
+  <!-- Строки правой чаши -->
+  <line x1="52" y1="37" x2="54" y2="44" stroke="#2AABEE" stroke-width="1.5"/>
+  <line x1="60" y1="37" x2="58" y2="44" stroke="#2AABEE" stroke-width="1.5"/>
+
+  <!-- Человечек в левой чаше -->
+  <circle cx="24" cy="40" r="2.5" fill="white"/>
+  <path d="M22 44 Q24 41.5 26 44" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>
