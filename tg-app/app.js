@@ -590,23 +590,22 @@ function goBackFromCta() {
 }
 
 /* ─── Отправка результата на бэкенд ─── */
-// Раскомментируй и настрой URL, когда будет готов бэкенд
 function sendResultToBackend() {
-  /*
+  const level = getResultLevel(state.score);
   const payload = {
-    initData:   tg?.initData || '',
-    answers:    state.answers,
-    score:      state.score,
-    level:      getResultLevel(state.score),
-    startParam: tg?.initDataUnsafe?.start_param || '',
+    initData:    tg?.initData || '',
+    answers:     state.answers,
+    totalScore:  state.score,
+    level:       level,
+    resultTitle: RESULTS[level]?.title || '',
+    startParam:  tg?.initDataUnsafe?.start_param || '',
   };
 
-  fetch('/api/result', {
+  fetch('https://navi-prolab.ru/api/result', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(payload),
   }).catch(err => console.warn('Backend unavailable:', err));
-  */
 }
 
 /* ─── Сохранение прогресса (CloudStorage) ─── */
