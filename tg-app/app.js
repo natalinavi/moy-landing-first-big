@@ -273,20 +273,13 @@ function showQuestion(index) {
     backBtn.show();
   }
 
-  // Фолбэк-кнопка «Назад» для браузера
-  if (!isInTelegram) {
-    const backFallback = document.getElementById('btn-back-question');
-    if (backFallback) {
-      if (index === 0) {
-        backFallback.style.display = 'none';
-      } else {
-        backFallback.style.display = 'block';
-        // Клонируем чтобы убрать старые обработчики
-        const newBtn = backFallback.cloneNode(true);
-        backFallback.parentNode.replaceChild(newBtn, backFallback);
-        newBtn.addEventListener('click', goBackFromQuestion);
-      }
-    }
+  // Кнопка «Назад» — показываем всегда (и в Telegram, и в браузере)
+  const backFallback = document.getElementById('btn-back-question');
+  if (backFallback) {
+    backFallback.style.display = 'block';
+    const newBtn = backFallback.cloneNode(true);
+    backFallback.parentNode.replaceChild(newBtn, backFallback);
+    newBtn.addEventListener('click', goBackFromQuestion);
   }
 
   // MainButton: скрыта на вопросах
