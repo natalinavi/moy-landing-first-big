@@ -4,7 +4,7 @@
  */
 
 const TOKEN = process.env.BOT_TOKEN;
-const MINI_APP_URL = 'https://tg-app-ashy.vercel.app';
+const MINI_APP_URL = 'https://tg-app-aithy.vercel.app';
 const TG_API = `https://api.telegram.org/bot${TOKEN}`;
 
 async function sendMessage(chatId, text, inlineKeyboard) {
@@ -45,7 +45,7 @@ module.exports = async function handler(req, res) {
     if (text.startsWith('/start')) {
       await sendMessage(
         chatId,
-        `Привет${name ? `, ${name}` : ''}! 👋\n\nНажми кнопку ниже, чтобы пройти квиз «Держится ли ваш бизнес на системе или на вас?»\n\n<i>6 вопросов · 2 минуты · персональный результат</i>`,
+        `Привет${name ? `, ${name}` : ''}! 👋\n\nНажми кнопку ниже, чтобы пройти квиз «Бизнес работает сам или держится на вас?»\n\n<i>6 вопросов · 2 минуты · персональный результат</i>`,
         [[{ text: '🚀 Начать квиз', web_app: { url: MINI_APP_URL } }]]
       );
     } else if (text.startsWith('/help')) {

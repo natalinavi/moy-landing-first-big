@@ -268,10 +268,9 @@ function showQuestion(index) {
     answersList.appendChild(btn);
   });
 
-  // BackButton Telegram: показываем со 2-го вопроса
+  // BackButton Telegram: показываем на всех вопросах (с 1-го → welcome)
   if (isInTelegram && backBtn) {
-    if (index === 0) backBtn.hide();
-    else             backBtn.show();
+    backBtn.show();
   }
 
   // Фолбэк-кнопка «Назад» для браузера
@@ -568,8 +567,8 @@ function openExpertChat() {
   haptic('impact', 'medium');
   const url = `https://t.me/${EXPERT_TG_USERNAME}`;
   if (isInTelegram && tg) {
-    // openLink с try_instant_view:false открывает внутри Telegram, а не в браузере
-    tg.openLink(url, { try_instant_view: false });
+    // openTelegramLink открывает чат прямо внутри Telegram, без браузера
+    tg.openTelegramLink(url);
   } else {
     window.open(url, '_blank');
   }
