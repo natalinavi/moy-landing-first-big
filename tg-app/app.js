@@ -543,8 +543,6 @@ function initCta() {
   // BackButton → назад на результат
   if (isInTelegram && backBtn) {
     backBtn.show();
-    backBtn.offClick(goBackFromCta);
-    backBtn.onClick(goBackFromCta);
   }
 
   // MainButton: «Записаться на звонок»
