@@ -203,7 +203,7 @@ function initWelcome() {
     shareBtn.addEventListener('click', () => {
       haptic('impact', 'light');
       const text = 'Проверь, держится ли твой бизнес на системе или на тебе — квиз за 2 минуты 👇';
-      const url  = 'https://t.me/AI_questionquiz_bot/app';
+      const url  = 'https://tg-app-ashy.vercel.app';
       if (isInTelegram && tg) {
         // Нативный шаринг внутри Telegram
         tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);

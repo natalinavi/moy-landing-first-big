@@ -4,7 +4,7 @@
  */
 
 const TOKEN = process.env.BOT_TOKEN;
-const MINI_APP_URL = 'https://tg-app-aithy.vercel.app';
+const MINI_APP_URL = 'https://tg-app-ashy.vercel.app';
 const TG_API = `https://api.telegram.org/bot${TOKEN}`;
 
 async function sendMessage(chatId, text, inlineKeyboard) {
