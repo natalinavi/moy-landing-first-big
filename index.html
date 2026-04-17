@@ -2485,7 +2485,17 @@
     txt.textContent = 'Отправляется…';
     btn.disabled = true;
 
-    await new Promise(r => setTimeout(r, 900));
+    try {
+      await fetch('https://navi-prolab.ru/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.querySelector('[name="name"]').value.trim(),
+          contact: form.querySelector('[name="contact"]').value.trim(),
+          topic: form.querySelector('[name="topic"]').value || null
+        })
+      });
+    } catch (_) {}
 
     form.style.display = 'none';
     ok.classList.add('show');

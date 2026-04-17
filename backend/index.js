@@ -89,6 +89,18 @@ app.post('/api/result', async (req, res) => {
   } catch(e) { console.error('Result error:', e); }
 });
 
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, contact, topic } = req.body || {};
+    if (!name || !contact) return res.status(400).json({ error: 'name and contact required' });
+    await supabase.from('landing_contacts').insert({ name, contact, topic: topic || null });
+    res.json({ success: true });
+  } catch (e) {
+    console.error('Contact error:', e);
+    res.status(500).json({ error: 'server error' });
+  }
+});
+
 app.post('/api/webhook', async (req, res) => {
   res.status(200).send('OK');
   try {
