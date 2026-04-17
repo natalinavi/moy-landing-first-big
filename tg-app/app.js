@@ -582,9 +582,16 @@ function goBackFromCta() {
 /* ─── Отправка результата на бэкенд ─── */
 function sendResultToBackend() {
   const level = getResultLevel(state.score);
+  const answersWithText = state.answers.map((a, i) => ({
+    score:      a.score,
+    answerIndex: a.answerIndex,
+    answerText: QUESTIONS[i]?.answers[a.answerIndex]?.text || '',
+  }));
+  const urlUid = new URLSearchParams(window.location.search).get('uid');
   const payload = {
     initData:    tg?.initData || '',
-    answers:     state.answers,
+    uid:         tg?.initDataUnsafe?.user?.id || urlUid || '',
+    answers:     answersWithText,
     totalScore:  state.score,
     level:       level,
     resultTitle: RESULTS[level]?.title || '',
